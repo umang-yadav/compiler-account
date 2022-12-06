@@ -13,6 +13,6 @@ public class HealthCheckControllerTest {
 
     @Test
     public void health() {
-        Assertions.assertNotNull(healthCheckController.health());
+        Assertions.assertNotNull(healthCheckController.healthCheck());
     }
 }
