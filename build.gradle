@@ -1,0 +1,67 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.4.8'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'jacoco'
+}
+
+group = 'com.compiler'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Unit test dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+	testImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
+	testImplementation group: 'org.jmockit', name: 'jmockit', version: '1.41'
+	testImplementation group: 'org.awaitility', name: 'awaitility', version: '3.0.0'
+
+}
+
+test {
+	useTestNG() { //Tells Gradle to use TestNG
+		useDefaultListeners = true // Tells TestNG to execute its default reporting structure
+		// suites 'src/test/suite.xml' //location of our suite.xml
+	}
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		csv.enabled false
+		html.enabled false
+	}
+}
+
+test.finalizedBy jacocoTestReport
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+task copyJar(type: Copy) {
+	from jar
+	into "target"
+}
+
+build.dependsOn copyJar
+
+test {
+	useTestNG()
+}
