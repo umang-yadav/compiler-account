@@ -8,8 +8,5 @@ import java.io.Serializable;
 public class BaseResponse<T extends Serializable> implements Serializable {
     private T data;
 
-    /**
-     * store meta information for response
-     */
     private Meta meta;
 }
