@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/account/v1")
 public class HealthCheckController {
+
+    /**
+     * Health Check for Application
+     * @return
+     */
     @GetMapping("/health")
     public BaseResponse healthCheck() {
         BaseResponse baseResponse = new BaseResponse<>();
